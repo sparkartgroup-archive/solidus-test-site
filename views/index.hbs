@@ -1,20 +1,33 @@
 {{!
 {
 	"resources": {
-		"global": "http://localhost:8080/api/global.json",
-		"index": "http://localhost:8080/api/index.json"
-	}
+		"Fauntleroy": "https://hipster-api.herokuapp.com/v1/preview/resources/1f250788d9b247aa8aa13d058e525c66",
+		"UUUGUUUUUUUU": "https://hipster-api.herokuapp.com/v1/preview/resources/bd66f7a3f1ba4d2a866539182905a435",
+		"RhubarbVole": "https://hipster-api.herokuapp.com/v1/preview/resources/fe495a6c4ccc432d867d6baf595af035",
+		"VoodooFrodo": "https://hipster-api.herokuapp.com/v1/preview/resources/581aec0715574dfa9017c17f44def58a"
+	},
+	"preprocessor": "index.js"
 }
 }}
 
-<h1>Index</h1>
+<blockquote>Hello and welcome to Tim's Diablo website! It's so cool!</blockquote>
 
-<blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non est viverra velit mattis placerat. Etiam sed adipiscing eros. Nullam vehicula gravida nibh sit amet gravida. Quisque interdum lacus et odio luctus tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida, ipsum ut pulvinar fermentum, lectus sapien iaculis augue, vel malesuada metus elit ut libero. Etiam venenatis magna at augue viverra nec interdum diam consequat. Suspendisse porta enim ut neque tristique iaculis.</blockquote>
+<div id="characters">
 
-<h2>From The Context</h2>
-<dl>
-	<dt>Global:</dt>
-	<dd>{{resources.global.global}}</dd>
-	<dt>Index:</dt>
-	<dd>{{resources.index.index}}</dd>
-</dl>
+<h2><i class="efon excite">@</i> Characters <i class="efon excite">Z</i></h2>
+
+<ul class="characters listing">
+{{#resources.characters}}<li data-id="{{id}}">
+	<h3 class="name">{{name}}</h3>
+	<sub class="class">{{class}}</sub>
+	<var class="level">{{level}}</var>
+	<ul class="items">
+		{{#items_array}}
+		<li data-id="{{id}}" class="{{type}}">
+			<img src="http://media.blizzard.com/d3/icons/items/large/{{icon}}.png" />
+			<h4>{{name}}</h4>
+		</li>
+		{{/items_array}}
+	</ul>
+</li>{{/resources.characters}}
+</ul>
