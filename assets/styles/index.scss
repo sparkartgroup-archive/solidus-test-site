@@ -1,0 +1,152 @@
+@-webkit-keyframes excite {
+	from { -webkit-transform: rotate( -15deg ); }
+	to { -webkit-transform: rotate( 15deg ); }
+}
+
+body {
+
+	font: 20px/20px 'UglyQua', serif;
+	background: #eee url('/images/natural_paper.png');
+
+}
+
+header,
+#main {
+
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+
+}
+
+header {
+
+	text-align: center;
+
+}
+
+h2 {
+
+	font-size: 48px;
+	line-height: 48px;
+	color: rgb( 100, 20, 20 );
+
+}
+
+h1 {
+
+	font: 80px/80px 'AquilineTwoRegular';
+
+}
+
+h2 {
+
+	border-bottom: #ccc 1px solid;
+	padding-bottom: 15px;
+	margin: 50px 0 0 0;
+
+}
+
+i.efon {
+
+	display: inline-block;
+	font-family: 'EfonRegular';
+	font-style: normal;
+
+}
+
+.excite {
+
+	-webkit-animation: excite 500ms alternate linear infinite;
+
+}
+
+ul.characters {
+
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	> li {
+
+		display: inline-block;
+		margin: 0;
+		padding: 30px;
+		border-right: #ccc 1px solid;
+
+		&:first-child { border-left: #ccc 1px solid; }
+
+	}
+
+}
+
+ul.items {
+
+	position: relative;
+	list-style-type: none;
+	height: 725px;
+	width: 258px;
+	margin: 0;
+	padding: 0;
+
+	> li {
+
+		position: absolute;
+		border: #ccc 1px solid;
+		border-radius: 10px;
+		box-shadow: 0 1px 1px #fff;
+
+		&:hover {
+
+			> img {
+
+				-webkit-transform: scale(1.1);
+				-webkit-filter: drop-shadow( 0 0 2px rgb( 255, 240, 200 )) drop-shadow(0 7px 12px rgba( 50, 25, 25, 0.7 ));
+
+			}
+
+			h4 {
+
+				display: block;
+
+			}
+
+		}
+
+		&.head { top: 20px; left: 100px; }
+		&.torso { top: 163px; left: 90px; }
+		&.feet { top: 564px; left: 99px; }
+		&.shoulders { top: 65px; left: 0; }
+		&.neck { top: 97px; left: 198px; }
+		&.legs { top: 421px; left: 99px; }
+		&.bracers { top: 208px; left: 198px; }
+		&.hands { top: 208px; left: 0; }
+		&.mainHand { top: 351px; left: 0; }
+		&.offHand { top: 351px; left: 198px; }
+		&.leftFinger { top: 525px; left: 0; }
+		&.rightFinger { left: 198px; top: 525px; }
+		&.waist { top: 342px; left: 99px; }
+
+		> h4 {
+
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			width: 200px;
+			margin: 0 0 0 -100px;
+			border: rgb( 255, 240, 200 ) 2px solid;
+			text-align: center;
+			background: rgba( 0, 50, 50, 0.9 );
+			padding: 9px 14px;
+			box-sizing: border-box;
+			border-radius: 10px;
+			color: rgb( 255, 240, 200 );
+			box-shadow: 0 5px 12px rgba( 0,0,0,0.4 );
+			z-index: 5;
+
+		}
+
+	}
+
+}
