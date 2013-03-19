@@ -1,5 +1,5 @@
 var data = this;
-var character = data.resources.character.content;
+var character = data.resources.character;
 
 // Create an array representation of the items object
 var createItemsArray = function( character ){
