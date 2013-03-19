@@ -44,11 +44,25 @@ module.exports = function( grunt ){
 			compile: {
 				options: {
 					namespace: 'solidus.templates',
-					partialRegex: /.*/,
-					partialsUseNamespace: true
+					processName: function( template_path ){
+						return template_path.replace( /(^views\/)|(\.hbs)/ig, '' );
+					}
 				},
 				files: {
 					'assets/compiled/templates.js': ['views/**/*.hbs']
+				}
+			},
+			partials: {
+				options: {
+					namespace: 'solidus.partials',
+					partialRegex: /.*/,
+					partialsUseNamespace: true,
+					processPartialName: function( partial_path ){
+						return partial_path.replace( /(^views\/)|(\.hbs)/ig, '' );
+					}
+				},
+				files: {
+					'assets/compiled/partials.js': ['views/**/*.hbs']
 				}
 			}
 		},
@@ -99,9 +113,9 @@ module.exports = function( grunt ){
 
 	grunt.registerTask( 'default', ['compile'] );
 	grunt.registerTask( 'compile', ['compilecss','compilehbs','compilejs'] );
-	grunt.registerTask( 'compilehbs', ['handlebars:compile'] );
+	grunt.registerTask( 'compilehbs', ['handlebars'] );
 	grunt.registerTask( 'compilejs', ['concat:js'] );
 	grunt.registerTask( 'compilecss', ['concat:css','sass','copy','clean:sass'] );
-	grunt.registerTask( 'dev', ['livereload-start','server','regarde' ] );
+	grunt.registerTask( 'dev', ['compile','livereload-start','server','regarde' ] );
 
 };
