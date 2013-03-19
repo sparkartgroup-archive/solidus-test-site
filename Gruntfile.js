@@ -40,14 +40,30 @@ module.exports = function( grunt ){
 				dest: 'assets/compiled/styles.css'
 			}
 		},
+		handlebars: {
+			compile: {
+				options: {
+					namespace: 'solidus.templates',
+					partialRegex: /.*/,
+					partialsUseNamespace: true
+				},
+				files: {
+					'assets/compiled/templates.js': ['views/**/*.hbs']
+				}
+			}
+		},
 		regarde: {
 			styles: {
 				files: ['assets/styles/**/*.scss','assets/styles/**/*.css','assets/styles/**/*.sass'],
-				tasks: ['concat:css','sass','copy']
+				tasks: ['compilecss']
+			},
+			templates: {
+				files: ['views/**/*.hbs'],
+				tasks: ['compilehbs']
 			},
 			scripts: {
 				files: ['assets/scripts/**/*.js'],
-				tasks: ['concat:js']
+				tasks: ['compilejs']
 			},
 			reload: {
 				files: ['assets/compiled/styles.css'],
@@ -81,7 +97,11 @@ module.exports = function( grunt ){
 		});
 	});
 
-	grunt.registerTask( 'default', ['concat','sass','copy','clean' ] );
+	grunt.registerTask( 'default', ['compile'] );
+	grunt.registerTask( 'compile', ['compilecss','compilehbs','compilejs'] );
+	grunt.registerTask( 'compilehbs', ['handlebars:compile'] );
+	grunt.registerTask( 'compilejs', ['concat:js'] );
+	grunt.registerTask( 'compilecss', ['concat:css','sass','copy','clean:sass'] );
 	grunt.registerTask( 'dev', ['livereload-start','server','regarde' ] );
 
 };

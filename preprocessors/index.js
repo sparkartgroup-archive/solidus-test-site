@@ -1,7 +1,7 @@
 var data = this;
-var UUUGUUUUUUUU = data.resources.UUUGUUUUUUUU.content;
-var RhubarbVole = data.resources.RhubarbVole.content;
-var VoodooFrodo = data.resources.VoodooFrodo.content;
+var UUUGUUUUUUUU = data.resources.UUUGUUUUUUUU;
+var RhubarbVole = data.resources.RhubarbVole;
+var VoodooFrodo = data.resources.VoodooFrodo;
 
 // Create an array representation of the items object
 var createItemsArray = function( character ){
