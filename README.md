@@ -1,4 +1,3 @@
-solidus-test-site
-=================
+#solidus-test-site
 
 A site for testing with solidus
