@@ -1,4 +1,3 @@
-var data = this;
 var UUUGUUUUUUUU = data.resources.UUUGUUUUUUUU;
 var RhubarbVole = data.resources.RhubarbVole;
 var VoodooFrodo = data.resources.VoodooFrodo;
