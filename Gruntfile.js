@@ -1,9 +1,8 @@
 module.exports = function( grunt ){
 
-	var pkg = grunt.file.readJSON('package.json');
+	var pkg = grunt.file.readJSON( __dirname +'/package.json');
 
 	grunt.initConfig({
-		cwd: process.cwd(),
 		pkg: pkg,
 		concat: {
 			js: {
@@ -25,7 +24,8 @@ module.exports = function( grunt ){
 			dev: {
 				options: {
 					lineNumbers: true,
-					style: 'expanded'
+					style: 'expanded',
+					quiet: true
 				},
 				files: {
 					'assets/compiled/styles_tmp.css': ['assets/compiled/styles.scss']
@@ -66,10 +66,13 @@ module.exports = function( grunt ){
 				}
 			}
 		},
-		regarde: {
+		watch: {
 			styles: {
 				files: ['assets/styles/**/*.scss','assets/styles/**/*.css','assets/styles/**/*.sass'],
-				tasks: ['compilecss']
+				tasks: ['compilecss'],
+				options: {
+					livereload: true
+				}
 			},
 			templates: {
 				files: ['views/**/*.hbs'],
@@ -78,14 +81,10 @@ module.exports = function( grunt ){
 			scripts: {
 				files: ['assets/scripts/**/*.js'],
 				tasks: ['compilejs']
-			},
-			reload: {
-				files: ['assets/compiled/styles.css'],
-				tasks: ['livereload']
 			}
 		},
 		clean: {
-			sass: ['assets/compiled/styles.scss','assets/compiled/styles_tmp.css'],
+			sass: ['assets/compiled/styles.scss','assets/compiled/styles_tmp.css']
 		}
 	});
 	
@@ -96,19 +95,11 @@ module.exports = function( grunt ){
 	});
 
 	grunt.registerTask( 'server', 'Start the Solidus server', function(){
-		var child_process = require('child_process');
-		var spawn = child_process.spawn;
-		var server = spawn( 'solidus', ['start'] );
-		console.log('Starting Solidus server...');
-		server.stderr.on( 'data', function( data ){
-			console.error( data.toString() );
-		});
-		server.stdout.on( 'data', function( data ){
-			console.log( data.toString() );
-		});
-		process.on( 'exit', function(){
-			server.kill();
-		});
+		var solidus = require('solidus');
+		var port = grunt.option('port') || grunt.option('p');
+		solidus.start({
+			port: port
+		});		
 	});
 
 	grunt.registerTask( 'default', ['compile'] );
@@ -116,6 +107,6 @@ module.exports = function( grunt ){
 	grunt.registerTask( 'compilehbs', ['handlebars'] );
 	grunt.registerTask( 'compilejs', ['concat:js'] );
 	grunt.registerTask( 'compilecss', ['concat:css','sass','copy','clean:sass'] );
-	grunt.registerTask( 'dev', ['compile','livereload-start','server','regarde' ] );
+	grunt.registerTask( 'dev', [ 'compile','server','watch' ] );
 
 };
