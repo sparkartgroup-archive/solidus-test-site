@@ -1,26 +1,24 @@
-var UUUGUUUUUUUU = data.resources.UUUGUUUUUUUU;
-var RhubarbVole = data.resources.RhubarbVole;
-var VoodooFrodo = data.resources.VoodooFrodo;
+var UUUGUUUUUUUU = context.resources.UUUGUUUUUUUU;
+var RhubarbVole = context.resources.RhubarbVole;
+var VoodooFrodo = context.resources.VoodooFrodo;
 
 // Create an array representation of the items object
-var createItemsArray = function( character ){
+var createItemsArray = function( items ){
 
-	var items_array = [];
+	var items_array = _( items ).map( function( item, type ){
+		var this_item = _(item).clone();
+		this_item.type = type;
+		return this_item;
+	});
 
-	for( var type in character.items ){
-		var item = character.items[type];
-		item.type = type;
-		items_array.push( item );
-	}
-
-	character.items_array = items_array;
+	return items_array;
 
 };
 
-createItemsArray( UUUGUUUUUUUU );
-createItemsArray( RhubarbVole );
-createItemsArray( VoodooFrodo );
+UUUGUUUUUUUU.items_array = createItemsArray( UUUGUUUUUUUU.items );
+RhubarbVole.items_array = createItemsArray( RhubarbVole.items );
+VoodooFrodo.items_array = createItemsArray( VoodooFrodo.items );
 
 var characters = [ UUUGUUUUUUUU, RhubarbVole, VoodooFrodo ];
 
-data.resources.characters = characters;
+context.resources.characters = characters;

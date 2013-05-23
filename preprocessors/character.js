@@ -1,18 +1,16 @@
-var character = data.resources.character;
+var character = context.resources.character;
 
 // Create an array representation of the items object
-var createItemsArray = function( character ){
+var createItemsArray = function( items ){
 
-	var items_array = [];
+	var items_array = _( items ).map( function( item, type ){
+		var this_item = _(item).clone();
+		this_item.type = type;
+		return this_item;
+	});
 
-	for( var type in character.items ){
-		var item = character.items[type];
-		item.type = type;
-		items_array.push( item );
-	}
-
-	character.items_array = items_array;
+	return items_array;
 
 };
 
-createItemsArray( character );
+character.items_array = createItemsArray( character.items );

@@ -1,6 +1,9 @@
 {
   "name": "solidus-test-site",
   "version": "0.0.0",
+  "dependencies": {
+    "solidus": "latest"
+    },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-sass": "~0.2.2",
