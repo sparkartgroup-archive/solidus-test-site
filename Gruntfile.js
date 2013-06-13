@@ -4,58 +4,67 @@ module.exports = function( grunt ){
 
 	grunt.initConfig({
 		pkg: pkg,
-		concat: {
-			js: {
-				options: {
-					separator: ';'
-				},
-				src: ['assets/scripts/**/*.js'],
-				dest: 'assets/compiled/scripts.js'
-			}
-		},
 		sass: {
-			dev: {
-				options: {
-					lineNumbers: true,
-					style: 'expanded',
-					quiet: true
-				},
-				files: {
-					'assets/compiled/styles_tmp.css': ['assets/styles/**/*.scss','assets/styles/**/*.css']
-				}
+			styles: {
+				files: [{
+					src: ['assets/styles/index.scss'],
+					dest: 'assets/styles/index_compiled.css' 
+				}]
 			}
 		},
-		// copy final css over after the fact because sass deletes-compiles-replaces
-		// which causes FoUC in conjunction with livereload
-		copy: {
-			css: {
-				src: 'assets/compiled/styles_tmp.css',
-				dest: 'assets/compiled/styles.css'
+		cssmin: {
+			options: {
+				banner: '/* Compiled on: '+ (new Date).toString() +'*/ \n'
+			},
+			files: {
+				'assets/compiled/styles.css': ['assets/styles/index_compiled.css']
 			}
+		},
+		clean: {
+			styles: ['assets/styles/index_compiled.css']
 		},
 		handlebars: {
 			compile: {
 				options: {
 					namespace: 'solidus.templates',
-					processName: function( template_path ){
-						return template_path.replace( /(^views\/)|(\.hbs)/ig, '' );
-					}
-				},
-				files: {
-					'assets/compiled/templates.js': ['views/**/*.hbs']
-				}
-			},
-			partials: {
-				options: {
-					namespace: 'solidus.partials',
 					partialRegex: /.*/,
 					partialsUseNamespace: true,
+					processName: function( template_path ){
+						return template_path.replace( /(^views\/)|(\.hbs)/ig, '' );
+					},
 					processPartialName: function( partial_path ){
 						return partial_path.replace( /(^views\/)|(\.hbs)/ig, '' );
 					}
 				},
 				files: {
-					'assets/compiled/partials.js': ['views/**/*.hbs']
+					'assets/compiled/templates.js': ['views/**/*.hbs']
+				}
+			}
+		},
+		concat: {
+			templates: {
+				files: {
+					'assets/compiled/templates.js': ['node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.runtime.js','assets/compiled/templates.js']
+				}
+			}
+		},
+		requirejs: {
+			options: {
+				baseUrl: 'assets/scripts/',
+				out: 'assets/compiled/scripts.js',
+				name: 'index',
+				preserveLicenseComments: false,
+				generateSourceMaps: true,
+				optimize: 'uglify2'
+			}
+		},
+		uglify: {
+			templates: {
+				options: {
+					banner: '/* Compiled on: '+ (new Date).toString() +'*/ \n'
+				},
+				files: {
+					'assets/compiled/templates.js': ['assets/compiled/templates.js']
 				}
 			}
 		},
@@ -75,9 +84,6 @@ module.exports = function( grunt ){
 				files: ['assets/scripts/**/*.js'],
 				tasks: ['compilejs']
 			}
-		},
-		clean: {
-			sass: ['assets/compiled/styles.scss','assets/compiled/styles_tmp.css']
 		}
 	});
 	
@@ -97,9 +103,9 @@ module.exports = function( grunt ){
 
 	grunt.registerTask( 'default', ['compile'] );
 	grunt.registerTask( 'compile', ['compilecss','compilehbs','compilejs'] );
-	grunt.registerTask( 'compilehbs', ['handlebars'] );
-	grunt.registerTask( 'compilejs', ['concat:js'] );
-	grunt.registerTask( 'compilecss', ['sass','copy','clean:sass'] );
+	grunt.registerTask( 'compilehbs', ['handlebars','concat:templates','uglify:templates'] );
+	grunt.registerTask( 'compilejs', ['requirejs'] );
+	grunt.registerTask( 'compilecss', ['sass','cssmin','clean:styles'] );
 	grunt.registerTask( 'dev', [ 'compile','server','watch' ] );
 
 };
