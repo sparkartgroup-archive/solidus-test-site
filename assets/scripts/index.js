@@ -1,1 +1,3 @@
-console.log('index.js');
+require(['test'],function(){
+	console.log('index.js');
+});

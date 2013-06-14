@@ -1,9 +1,6 @@
 {
   "name": "solidus-test-site",
   "version": "0.0.0",
-  "dependencies": {
-    "solidus": "latest"
-  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-sass": "~0.3.0",
@@ -16,5 +13,6 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-cssmin": "~0.6.1"
-  }
+  },
+  "bundledDependencies": ["solidus"]
 }

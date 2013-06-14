@@ -13,11 +13,13 @@ module.exports = function( grunt ){
 			}
 		},
 		cssmin: {
-			options: {
-				banner: '/* Compiled on: '+ (new Date).toString() +'*/ \n'
-			},
-			files: {
-				'assets/compiled/styles.css': ['assets/styles/index_compiled.css']
+			styles: {
+				options: {
+					banner: '/* Compiled on: '+ (new Date).toString() +'*/ \n'
+				},
+				files: {
+					'assets/compiled/styles.css': ['assets/styles/index_compiled.css']
+				}
 			}
 		},
 		clean: {
@@ -49,13 +51,15 @@ module.exports = function( grunt ){
 			}
 		},
 		requirejs: {
-			options: {
-				baseUrl: 'assets/scripts/',
-				out: 'assets/compiled/scripts.js',
-				name: 'index',
-				preserveLicenseComments: false,
-				generateSourceMaps: true,
-				optimize: 'uglify2'
+			scripts: {
+				options: {
+					baseUrl: 'assets/scripts/',
+					out: 'assets/compiled/scripts.js',
+					name: 'index',
+					preserveLicenseComments: false,
+					generateSourceMaps: true,
+					optimize: 'uglify2'
+				}
 			}
 		},
 		uglify: {
@@ -69,12 +73,15 @@ module.exports = function( grunt ){
 			}
 		},
 		watch: {
-			styles: {
-				files: ['assets/styles/**/*.scss','assets/styles/**/*.css','assets/styles/**/*.sass'],
-				tasks: ['compilecss'],
+			livereload: {
+				files: ['assets/compiled/styles.css'],
 				options: {
 					livereload: true
 				}
+			},
+			styles: {
+				files: ['assets/styles/**/*.scss','assets/styles/**/*.css','assets/styles/**/*.sass','!assets/styles/index_compiled.css'],
+				tasks: ['compilecss']
 			},
 			templates: {
 				files: ['views/**/*.hbs'],
