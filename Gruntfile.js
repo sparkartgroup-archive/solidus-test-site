@@ -6,10 +6,21 @@ module.exports = function( grunt ){
 		pkg: pkg,
 		sass: {
 			styles: {
+				options: {
+					lineNumbers: true,
+					style: 'expanded'
+				},
 				files: [{
 					src: ['assets/styles/index.scss'],
 					dest: 'assets/styles/index_compiled.css' 
 				}]
+			}
+		},
+		cssjoin: {
+			styles: {
+				files: {
+					'assets/compiled/styles.css': ['assets/styles/index_compiled.css']
+				}
 			}
 		},
 		cssmin: {
@@ -77,6 +88,20 @@ module.exports = function( grunt ){
 				}
 			}
 		},
+		copy: {
+			predeploy: {
+				files: [{
+					expand: true,
+					src: ['assets/**','views/**'],
+					dest: 'deploy/'
+				}]
+			}
+		},
+		filerev: {
+			predeploy: {
+				src: 'deploy/assets/**/*'
+			}
+		},
 		watch: {
 			livereload: {
 				files: ['assets/compiled/styles.css'],
@@ -117,7 +142,8 @@ module.exports = function( grunt ){
 	grunt.registerTask( 'compile', ['compilecss','compilehbs','compilejs'] );
 	grunt.registerTask( 'compilehbs', ['handlebars','concat:templates','uglify:templates'] );
 	grunt.registerTask( 'compilejs', ['requirejs','concat:scripts'] );
-	grunt.registerTask( 'compilecss', ['sass','cssmin','clean:styles'] );
+	grunt.registerTask( 'compilecss', ['sass','cssjoin','clean:styles'] );
 	grunt.registerTask( 'dev', [ 'compile','server','watch' ] );
+	grunt.registerTask( 'predeploy', ['copy:predeploy','filerev:predeploy'] );
 
 };

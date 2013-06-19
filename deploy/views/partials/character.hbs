@@ -1,0 +1,13 @@
+<div class="character">
+	<a href="/characters/{{id}}"><h3 class="name">{{name}}</h3></a>
+	<sub class="class">{{class}}</sub>
+	<var class="level">{{level}}</var>
+	<ul class="items">
+		{{#items_array}}
+		<li data-id="{{id}}" class="{{type}}">
+			<img src="http://media.blizzard.com/d3/icons/items/large/{{icon}}.png" />
+			<h4>{{name}}</h4>
+		</li>
+		{{/items_array}}
+	</ul>
+</div>

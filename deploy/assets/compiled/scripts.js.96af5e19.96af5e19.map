@@ -1,0 +1,1 @@
+{"version":3,"file":"scripts.js","sources":["../scripts/test.js","../scripts/index.js"],"names":[],"mappings":"AAEA,OAAA,OAAA,cCDA,SAAA,QAAA,WACA,QAAA,IAAA,cAEA,OAAA,QAAA","sourcesContent":["\n;\ndefine(\"test\", function(){});\n","\nrequire(['test'],function(){\n\tconsole.log('index.js');\n});\ndefine(\"index\", function(){});\n"]}
