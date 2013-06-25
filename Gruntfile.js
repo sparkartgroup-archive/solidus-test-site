@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function( grunt ){
 
 	var pkg = grunt.file.readJSON( __dirname +'/package.json');
@@ -98,8 +100,14 @@ module.exports = function( grunt ){
 			}
 		},
 		filerev: {
-			predeploy: {
-				src: 'deploy/assets/**/*'
+			assets: {
+				src: ['deploy/assets/**/*','!deploy/assets/**/*.css','!deploy/assets/**/*.js']
+			},
+			styles: {
+				src: 'deploy/assets/**/*.css'
+			},
+			scripts: {
+				src: 'deploy/assets/**/*.js'
 			}
 		},
 		watch: {
@@ -121,6 +129,11 @@ module.exports = function( grunt ){
 				files: ['assets/scripts/**/*.js'],
 				tasks: ['compilejs']
 			}
+		},
+		'replace-asset-urls': {
+			files: {
+				src: ['deploy/assets/**/*.css','deploy/assets/**/*.js']
+			}
 		}
 	});
 	
@@ -138,12 +151,25 @@ module.exports = function( grunt ){
 		});		
 	});
 
+	grunt.registerMultiTask( 'replace-asset-urls', function(){
+		this.files[0].src.forEach( function( src ){
+			var contents = grunt.file.read( src );
+			for( var url in grunt.filerev.summary ){
+				var rev_url = grunt.filerev.summary[url].replace( 'deploy'+ path.sep +'assets'+ path.sep, '' );
+				var url_regex = new RegExp( url.replace( 'deploy'+ path.sep +'assets'+ path.sep, '' ), 'ig' );
+				contents = contents.replace( url_regex, rev_url );
+				console.log( url_regex, 'to', rev_url );
+			}
+			grunt.file.write( src, contents );
+		});
+	});
+
 	grunt.registerTask( 'default', ['compile'] );
 	grunt.registerTask( 'compile', ['compilecss','compilehbs','compilejs'] );
 	grunt.registerTask( 'compilehbs', ['handlebars','concat:templates','uglify:templates'] );
 	grunt.registerTask( 'compilejs', ['requirejs','concat:scripts'] );
 	grunt.registerTask( 'compilecss', ['sass','cssjoin','clean:styles'] );
 	grunt.registerTask( 'dev', [ 'compile','server','watch' ] );
-	grunt.registerTask( 'predeploy', ['copy:predeploy','filerev:predeploy'] );
+	grunt.registerTask( 'predeploy', ['copy:predeploy','filerev:assets','replace-asset-urls','filerev:scripts','filerev:styles'] );
 
 };
