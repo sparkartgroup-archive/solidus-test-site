@@ -132,7 +132,7 @@ module.exports = function( grunt ){
 		},
 		'replace-asset-urls': {
 			files: {
-				src: ['deploy/assets/**/*.css','deploy/assets/**/*.js']
+				src: ['deploy/assets/**/*.css','deploy/assets/**/*.js','deploy/views/**/*.hbs']
 			}
 		}
 	});
@@ -170,6 +170,6 @@ module.exports = function( grunt ){
 	grunt.registerTask( 'compilejs', ['requirejs','concat:scripts'] );
 	grunt.registerTask( 'compilecss', ['sass','cssjoin','clean:styles'] );
 	grunt.registerTask( 'dev', [ 'compile','server','watch' ] );
-	grunt.registerTask( 'predeploy', ['copy:predeploy','filerev:assets','replace-asset-urls','filerev:scripts','filerev:styles'] );
+	grunt.registerTask( 'predeploy', ['copy:predeploy','filerev:assets','replace-asset-urls','filerev:scripts','filerev:styles','replace-asset-urls'] );
 
 };
