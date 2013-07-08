@@ -16,7 +16,7 @@
     "grunt-cssjoin": "~0.2.0",
     "grunt-filerev": "~0.1.0"
   },
-  "bundledDependencies": [
-    "solidus"
-  ]
+  "dependencies": {
+    "solidus": "0.0.1"
+  }
 }
