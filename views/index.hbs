@@ -1,21 +1,13 @@
 {{!
 {
 	"resources": {
-		"Fauntleroy": "https://hipster-tools.herokuapp.com/hipster/v1/resources/ec9085/4-us-diablo-iii-api-profile?profile_id=Fauntleroy-1134",
-		"UUUGUUUUUUUU": "https://hipster-tools.herokuapp.com/hipster/v1/resources/5647ad/3-us-diablo-iii-api-hero?hero_id=92352",
-		"RhubarbVole": "https://hipster-tools.herokuapp.com/hipster/v1/resources/5647ad/3-us-diablo-iii-api-hero?hero_id=7531555",
-		"VoodooFrodo": "https://hipster-tools.herokuapp.com/hipster/v1/resources/5647ad/3-us-diablo-iii-api-hero?hero_id=7698952"
-	},
-	"preprocessor": "index.js"
+		"profile": "http://api.soundcloud.com/users/fauntlero-von-patton.json?client_id=71539edc4dd345ee05026bc96d0c5333",
+		"favorites": "http://api.soundcloud.com/users/fauntlero-von-patton/favorites.json?client_id=71539edc4dd345ee05026bc96d0c5333"
+	}
 }
 }}
 
-<blockquote>Hello and welcome to Tim's Diablo website! It's so cool!</blockquote>
+<blockquote>Hello and welcome to Tim's website! It's so cool!</blockquote>
 
-<div id="characters">
-
-	<h2><i class="efon excite">@</i> Characters <i class="efon excite">Z</i></h2>
-
-	{{> partials/characters resources.characters }}
-
-</div>
+{{#if resources.profile}}{{> profile resources.profile}}{{/if}}
+{{#if resources.favorites}}{{> favorites resources.favorites}}{{/if}}
